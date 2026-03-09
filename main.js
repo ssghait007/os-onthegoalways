@@ -14,6 +14,7 @@ function renderDock(apps) {
     a.rel = 'noopener noreferrer';
     a.className = 'dock-icon';
     a.title = app.name;
+    a.dataset.label = app.name;
 
     if (app.icon.endsWith('.svg')) {
       const img = document.createElement('img');
@@ -25,28 +26,6 @@ function renderDock(apps) {
     }
 
     dock.appendChild(a);
-  });
-  addDockMagnification();
-}
-
-function addDockMagnification() {
-  const dock = document.getElementById('dock');
-  const icons = [...dock.querySelectorAll('.dock-icon')];
-  const maxDist = 100;
-
-  dock.addEventListener('mousemove', e => {
-    icons.forEach(icon => {
-      const rect = icon.getBoundingClientRect();
-      const iconCenterX = rect.left + rect.width / 2;
-      const dist = Math.abs(e.clientX - iconCenterX);
-      const scale = dist < maxDist ? 1 + (1 - dist / maxDist) * 0.5 : 1;
-      const translateY = dist < maxDist ? -(1 - dist / maxDist) * 14 : 0;
-      icon.style.transform = `translateY(${translateY}px) scale(${scale})`;
-    });
-  });
-
-  dock.addEventListener('mouseleave', () => {
-    icons.forEach(icon => { icon.style.transform = ''; });
   });
 }
 
