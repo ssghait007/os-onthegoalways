@@ -47,11 +47,6 @@ body {
   user-select: none;
 }
 
-.dock-icon:hover {
-  transform: translateY(-14px) scale(1.35);
-  filter: brightness(1.2);
-}
-
 .dock-icon img {
   width: 48px;
   height: 48px;
