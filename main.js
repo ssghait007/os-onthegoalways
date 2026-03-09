@@ -27,4 +27,72 @@ function renderDock(apps) {
   });
 }
 
+function renderConstellation() {
+  const svg = d3.select('#constellation');
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+  svg.attr('width', W).attr('height', H);
+
+  const NUM_STARS = 120;
+  const LINK_DIST = 120;
+
+  // Generate random stars
+  const stars = Array.from({ length: NUM_STARS }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.5 + 0.5,
+    opacity: Math.random() * 0.5 + 0.3,
+    twinkleDuration: 2000 + Math.random() * 3000
+  }));
+
+  // Draw proximity lines
+  const lines = [];
+  for (let i = 0; i < stars.length; i++) {
+    for (let j = i + 1; j < stars.length; j++) {
+      const dx = stars[i].x - stars[j].x;
+      const dy = stars[i].y - stars[j].y;
+      if (Math.sqrt(dx * dx + dy * dy) < LINK_DIST) {
+        lines.push({ source: stars[i], target: stars[j] });
+      }
+    }
+  }
+
+  svg.selectAll('line')
+    .data(lines)
+    .enter().append('line')
+    .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x).attr('y2', d => d.target.y)
+    .attr('stroke', 'rgba(255,255,255,0.06)')
+    .attr('stroke-width', 0.5);
+
+  // Draw stars with twinkle
+  const starEls = svg.selectAll('circle')
+    .data(stars)
+    .enter().append('circle')
+    .attr('cx', d => d.x)
+    .attr('cy', d => d.y)
+    .attr('r', d => d.r)
+    .attr('fill', 'white')
+    .attr('opacity', d => d.opacity);
+
+  // Twinkle animation
+  function twinkle(el, star) {
+    el.transition()
+      .duration(star.twinkleDuration)
+      .attr('opacity', star.opacity * 0.3)
+      .transition()
+      .duration(star.twinkleDuration)
+      .attr('opacity', star.opacity)
+      .on('end', () => twinkle(el, star));
+  }
+
+  starEls.each(function(d) { twinkle(d3.select(this), d); });
+
+  // Resize handler
+  window.addEventListener('resize', () => {
+    svg.selectAll('*').remove();
+    renderConstellation();
+  });
+}
+
 init();
