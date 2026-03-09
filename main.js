@@ -32,13 +32,13 @@ function renderDock(apps) {
 function addDockMagnification() {
   const dock = document.getElementById('dock');
   const icons = [...dock.querySelectorAll('.dock-icon')];
+  const maxDist = 100;
 
   dock.addEventListener('mousemove', e => {
     icons.forEach(icon => {
       const rect = icon.getBoundingClientRect();
       const iconCenterX = rect.left + rect.width / 2;
       const dist = Math.abs(e.clientX - iconCenterX);
-      const maxDist = 100;
       const scale = dist < maxDist ? 1 + (1 - dist / maxDist) * 0.5 : 1;
       const translateY = dist < maxDist ? -(1 - dist / maxDist) * 14 : 0;
       icon.style.transform = `translateY(${translateY}px) scale(${scale})`;
