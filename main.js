@@ -2,6 +2,7 @@ async function init() {
   const apps = await fetch('./apps.json').then(r => r.json());
   renderDock(apps);
   renderConstellation();
+  window.addEventListener('resize', renderConstellation);
 }
 
 function renderDock(apps) {
@@ -88,11 +89,6 @@ function renderConstellation() {
 
   starEls.each(function(d) { twinkle(d3.select(this), d); });
 
-  // Resize handler
-  window.addEventListener('resize', () => {
-    svg.selectAll('*').remove();
-    renderConstellation();
-  });
 }
 
 init();
