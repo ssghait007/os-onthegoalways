@@ -1,0 +1,10 @@
+[
+  { "name": "Blog", "url": "https://onthegoalways.com", "icon": "✍️" },
+  { "name": "MultiMic", "url": "https://multimic.onthegoalways.com", "icon": "🎤" },
+  { "name": "Gifts", "url": "https://gift.onthegoalways.com", "icon": "🎁" },
+  { "name": "Todos", "url": "https://todos.onthegoalways.com", "icon": "✅" },
+  { "name": "Swami Charitra", "url": "https://swami-charitra.pages.dev", "icon": "📖" },
+  { "name": "YT Breaks", "url": "https://ytbreaks.pages.dev", "icon": "▶️" },
+  { "name": "Inventory", "url": "https://inventorymgmt.netlify.app", "icon": "📦" },
+  { "name": "Portfolio", "url": "https://sachinghait.pages.dev", "icon": "👤" }
+]
