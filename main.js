@@ -30,6 +30,7 @@ function renderDock(apps) {
 
 function renderConstellation() {
   const svg = d3.select('#constellation');
+  svg.selectAll('*').remove();
   const W = window.innerWidth;
   const H = window.innerHeight;
   svg.attr('width', W).attr('height', H);
